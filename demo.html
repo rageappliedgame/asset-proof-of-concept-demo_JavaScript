@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>RAGE DEMO</title>
+    <script src="AssetManager.js"></script>
+    <script src="Asset.js"></script>
+    <script src="Logger.js"></script>
+</head>
+<body>
+
+    <h1>Asset Manager Demo</h1>
+    <ul>
+        <li>This demo creates 4 assets, two 'Hello World' Assets and two Logger Assets</li>
+        <li></li>
+        <li>It demonstrates how Assets can use the Asset Manager singleton to register themselves (and receive a unique id)</li>
+        <li></li>
+        <li>Show how Asset_1 can invoke the log method of all (ie both) Logger Assets</li>
+        <li>Show how the log method of one of the Logger Assets (Logger_3) can be tied to a function in this demo (could also be a logging facility of a game engine)</li>
+        <li>Show how the same logging to all (ie both) Logger Assets now is different (Logger_2 logs to the JavScript Console and Logger_3 presents an Alert)</li>
+        <li></li>
+        <li>Show that the class and id properties of an Asset are read-only</li>
+        <li></li>
+        <li>Show a external JavaScript File containing a bare-bones Event System (subpubz) loaded synchronously.</li>
+        <li>Use this subpubz event system in both EventManager and Asset.</li>
+        <li></li>
+        <li>This demo also contains some commented code that shows how to use the Cocos2D-html5 Event System.</li>
+        <li></li>
+        <li>Check the JavaScript Console for the output of this demo.</li>
+        <li></li>
+    </ul>
+
+
+    <script>
+        /*
+        // veg: added event listener (GameEngine Dependend).
+        //
+        this._listener1 = cc.EventListener.create({
+            event: cc.EventListener.CUSTOM,
+            eventName: "game_custom_event1",
+            callback: function (event) {
+                cc.log("Custom event 1 received, " + event.getUserData() + " times");
+
+                // veg: pass this (MyScene) as UserData
+                event.getUserData().helloLabel.setString("Custom event 1 received, " + " times");
+            }
+        });
+        cc.eventManager.addListener(this._listener1, 1);
+
+        // veg: added event triggering.
+        // veg: pass this (MyScene) as UserData.
+        //
+        var event = new cc.EventCustom("game_custom_event1");
+        event.setUserData(this);
+
+        // veg: added event triggering.
+        //
+        cc.eventManager.dispatchEvent(event);
+
+        // veg: remove event.
+        //
+        cc.eventManager.removeListener(this._listener1);
+        */
+
+        ///////////////////////////////////////////////////
+
+        function myLogger(msg) {
+            alert(msg);
+        }
+
+        // Add assets + asset manager.
+        //
+        var asset1 = new Asset();
+        var asset2 = new Asset();
+        var asset3 = new Logger();
+        var asset4 = new Logger();
+
+        asset3.log("Asset1: " + asset1.class + ", " + asset1.id);
+        asset3.log("Asset2: " + asset2.class + ", " + asset2.id);
+        asset3.log("Asset3: " + asset3.class + ", " + asset3.id);
+        asset3.log("Asset4: " + asset4.class + ", " + asset4.id);
+
+        // Use the new Logger directly.
+        //
+        asset3.log("LogByLogger: " + asset3.class + ", " + asset3.id);
+
+        // Test if asset1 can find the Logger (asset3) thru the AssetManager.
+        //
+        asset1.publicMethod("Hello World (console.log)");
+
+        // Replace the 2nd Logger's log method by a native version supplied by the Game Engine.
+        //
+        asset4.log = myLogger; //or cc.log in Cocos2D-html5;
+
+        // Check the results for both Loggers differ (one message goes to the console, the other shows as an alert).
+        //
+        asset1.publicMethod("Hello Different World (Mixed Logging)");
+
+        // Define an event, subscribe to it and fire the event.
+        //
+        pubsubz.define('EventSystem.Msg');
+
+        pubsubz.subscribe('EventSystem.Msg', function (topics, data) {
+            console.log("[demo.html]" + "." + topics + ": " + data);
+        });
+
+        pubsubz.publish('EventSystem.Msg', 'hello from demo.html!');
+
+        // Check if id and class can still be changed (shouldn't).
+        //
+        asset4.id = "XYY1Z";
+        asset4.class = "test";
+        asset4.log("Asset4: " + asset4.class + ", " + asset4.id);
+    </script>
+
+</body>
+</html>
