@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// A Simple Asset Manager class that registers instances of classes and supplies some
 /// bookkeeping methods to allow inter asset communication.
 /// 
@@ -54,13 +54,13 @@ var AssetManager = (function () {
         eval(xhrObj.responseText);
     }
 
-    // Based on http://www.mojavelinux.com/articles/javascript_hashes.html
-    // © Mojavelinux, Inc
-    // Document Version: 1.3
-    // Last Modified: Fri Mar 4, 2012
-    // License: Creative Commons Attribution-ShareAlike 3.0 Unported License
-    // 
-    function HashTable(obj) {
+    /// <summary>
+    /// Ported from http://www.mojavelinux.com/articles/javascript_hashes.html 
+    /// © Mojavelinux, Inc
+    /// Document Version: 1.3 Last Modified: Fri Mar 4, 2012 
+    /// License: Creative Commons Attribution-ShareAlike 3.0 Unported License.
+    /// </summary>
+    function HashTable() {
 
         /// <summary>
         /// Init.
@@ -74,14 +74,6 @@ var AssetManager = (function () {
         /// the property values are the objects stored in the hast table.
         /// </summary>
         this.items = {};
-
-        // Process obj parameter if any. 
-        for (var p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                this.items[p] = obj[p];
-                this.length++;
-            }
-        }
 
         /// <summary>
         /// Sets an item.
@@ -271,8 +263,9 @@ var AssetManager = (function () {
         //    console.log("I am private");
         //}
 
-        // User to generate uniqueId's for registered assets.
-        // 
+        /// <summary>
+        /// User to generate uniqueId's for registered assets.
+        /// </summary>
         var idGenerator = 0;
 
         // var privateVariable = "Im also private";
@@ -293,33 +286,64 @@ var AssetManager = (function () {
             //    return privateRandomNumber;
             //},
 
-            // Register an Asset.
-            // 
+            /// <summary>
+            /// Registers the asset instance.
+            /// </summary>
+            ///
+            /// <param name="asset"> The asset. </param>
+            /// <param name="claz">  The claz. </param>
+            ///
+            /// <returns>
+            /// .
+            /// </returns>
             registerAssetInstance: function (asset, claz) {
                 // console.log(name);
                 // This does not work if we can remove or rename items! 
                 // Unless the length of the array never shrinks.
-                var id = claz + "_" + (idGenerator++).toString(); //assets.length
 
-                asset.id = id;
+                var keys = assets.keys();
+                for (i = 0; i < assets.length; i++) {
+                    if (assets.getItem(keys[i]) === asset) {
+                        return keys[i];
+                    }
+                }
 
-                console.log("Registering Asset " + typeof (asset) + "/" + claz + " as " + id);
+                var Id = claz + "_" + (idGenerator++).toString(); //assets.length
 
-                assets.setItem(id, asset);
+                asset.Id = Id;
+
+                console.log("Registering Asset " + typeof (asset) + "/" + claz + " as " + Id);
+
+                //todo check for dupes.
+                assets.setItem(Id, asset);
 
                 console.log("Registered " + assets.length + " Asset(s)");
 
-                return id;
+                return Id;
             },
 
-            // Returns the exact match.
-            // 
+            /// <summary>
+            /// Returns the exact match.
+            /// </summary>
+            ///
+            /// <param name="id"> The identifier. </param>
+            ///
+            /// <returns>
+            /// The found asset by identifier.
+            /// </returns>
             findAssetById: function (id) {
                 return assets.getItem(id);
             },
 
-            // Returns the first match.
-            // 
+            /// <summary>
+            /// Returns the first match by class.
+            /// </summary>
+            ///
+            /// <param name="claz"> The claz. </param>
+            ///
+            /// <returns>
+            /// The found asset by class.
+            /// </returns>
             findAssetByClass: function (claz) {
                 var keys = assets.keys();
 
@@ -331,14 +355,24 @@ var AssetManager = (function () {
                 return null;
             },
 
+            /// <summary>
+            /// Searches for the first assets by class.
+            /// </summary>
+            ///
+            /// <param name="claz"> The claz. </param>
+            ///
+            /// <returns>
+            /// The found assets by class.
+            /// </returns>
             findAssetsByClass: function (claz) {
                 var keys = assets.keys();
                 var results = [];
 
-                for (i = 0; i < assets.length; i++)
+                for (i = 0; i < assets.length; i++) {
                     if (keys[i].indexOf(claz + "_") == 0) {
                         results.push(assets.getItem(keys[i]));
                     }
+                }
 
                 return results;
             },

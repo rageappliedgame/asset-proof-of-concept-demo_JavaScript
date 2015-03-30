@@ -27,7 +27,7 @@ function Asset() {
     ///
     /// <param name="this">    this. </param>
     /// <param name=""class""> The "class". </param>
-    Object.defineProperty(this, "class", {
+    Object.defineProperty(this, "Class", {
         enumerable: true,
         configurable: true,
         get: function () {
@@ -66,7 +66,7 @@ function Asset() {
             if (loggers.length > 0) {
                 for (i = 0; i < loggers.length; i++) {
                     var l = loggers[i];
-                    l.log(l.id + " - " + msg);
+                    l.log(l.Id + " - " + msg);
                 }
             }
         }
@@ -78,11 +78,11 @@ function Asset() {
     ///
     /// <param name="result">  The result. </param>
     /// <param name=""class""> The "class". </param>
-    Object.defineProperty(result, "class", {
+    Object.defineProperty(result, "Class", {
         writable: false,
         enumerable: true,
         configurable: true,
-        value: this.class,
+        value: this.Class,
     });
 
     /// <summary>
@@ -93,7 +93,7 @@ function Asset() {
     ///
     /// <param name="result"> The result. </param>
     /// <param name=""id"">   The "id". </param>
-    Object.defineProperty(result, "id", {
+    Object.defineProperty(result, "Id", {
         enumerable: true,
         configurable: true,
         get: function () {
@@ -121,12 +121,12 @@ function Asset() {
         return assetManager.registerAssetInstance(result, claz);
     }
 
-    _init(result.class);
+    _init(result.Class);
 
     // Subscribe to the example1 event.
     // 
     var testSubscription = pubsubz.subscribe('EventSystem.Init', function (topics, data) {
-        console.log("[" + result.id + "]" + "." + topics + ": " + data);
+        console.log("[" + result.Id + "]" + "." + topics + ": " + data);
     });
 
     // Test code to see if id and class can be still changed (should not happen).

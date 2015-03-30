@@ -29,7 +29,7 @@ function Logger() {
     ///
     /// <param name="this">    this. </param>
     /// <param name=""class""> The "class". </param>
-    Object.defineProperty(this, "class", {
+    Object.defineProperty(this, "Class", {
         enumerable: true,
         configurable: true,
         get: function () {
@@ -65,11 +65,11 @@ function Logger() {
     ///
     /// <param name="result">  The result. </param>
     /// <param name=""class""> The "class". </param>
-    Object.defineProperty(result, "class", {
+    Object.defineProperty(result, "Class", {
         writable: false,
         enumerable: true,
         configurable: true,
-        value: this.class,
+        value: this.Class,
     });
 
     /// <summary>
@@ -78,7 +78,7 @@ function Logger() {
     ///
     /// <param name="result"> The result. </param>
     /// <param name=""id"">   The "id". </param>
-    Object.defineProperty(result, "id", {
+    Object.defineProperty(result, "Id", {
         enumerable: true,
         configurable: true,
         get: function () {
@@ -106,7 +106,7 @@ function Logger() {
         return assetManager.registerAssetInstance(result, claz);
     }
 
-    _init(result.class);
+    _init(result.Class);
 
     // Test code to see if id and class can be still changed (should not happen).
     // 

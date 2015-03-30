@@ -74,14 +74,14 @@
         var asset3 = new Logger();
         var asset4 = new Logger();
 
-        asset3.log("Asset1: " + asset1.class + ", " + asset1.id);
-        asset3.log("Asset2: " + asset2.class + ", " + asset2.id);
-        asset3.log("Asset3: " + asset3.class + ", " + asset3.id);
-        asset3.log("Asset4: " + asset4.class + ", " + asset4.id);
+        asset3.log("Asset1: " + asset1.Class + ", " + asset1.Id);
+        asset3.log("Asset2: " + asset2.Class + ", " + asset2.Id);
+        asset3.log("Asset3: " + asset3.Class + ", " + asset3.Id);
+        asset3.log("Asset4: " + asset4.Class + ", " + asset4.Id);
 
         // Use the new Logger directly.
         //
-        asset3.log("LogByLogger: " + asset3.class + ", " + asset3.id);
+        asset3.log("LogByLogger: " + asset3.Class + ", " + asset3.Id);
 
         // Test if asset1 can find the Logger (asset3) thru the AssetManager.
         //
@@ -107,9 +107,13 @@
 
         // Check if id and class can still be changed (shouldn't).
         //
-        asset4.id = "XYY1Z";
-        asset4.class = "test";
-        asset4.log("Asset4: " + asset4.class + ", " + asset4.id);
+        //asset4.Id = "XYY1Z";
+        //asset4.Class = "test";
+        //asset4.log("Asset4: " + asset4.Class + ", " + asset4.Id);
+
+        // Test if we can reregister without creating new stuff in the register (ie get the existing unique id returned).
+        //
+        console.log("Trying to re-register: " + AssetManager.getInstance().registerAssetInstance(asset4, asset4.Class));
     </script>
 
 </body>
