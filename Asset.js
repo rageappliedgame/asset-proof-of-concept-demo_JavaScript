@@ -126,6 +126,7 @@ function Asset() {
     // Subscribe to the example1 event.
     // 
     var testSubscription = pubsubz.subscribe('EventSystem.Init', function (topics, data) {
+        //This code fails in TypeScript (coded there as 'this.Id') as this points to the method and not the Asset.
         console.log("[" + result.Id + "]" + "." + topics + ": " + data);
     });
 
