@@ -46,12 +46,20 @@ var AssetManager = (function () {
     /// See https://github.com/addyosmani/pubsubz.
     /// </summary>
     ///
-    /// <param name="url"> URL of the document. </param>
-    function loadScriptSync(url) {
+    /// <param name="url">    URL of the document. </param>
+    /// <param name="context"> The object where to do the script evaluation. </param>
+    ///
+    /// <returns>
+    /// The evaluated script.
+    /// </returns>
+    function loadScriptSync(url, context) {
         var xhrObj = new XMLHttpRequest();
-        xhrObj.open('GET', 'pubsubz.js', false);
+        xhrObj.open('GET', url, false);
         xhrObj.send(null);
-        eval(xhrObj.responseText);
+
+        // See http://stackoverflow.com/questions/8403108/calling-eval-in-particular-context
+
+        eval.call(context, xhrObj.responseText);
     }
 
     /// <summary>
@@ -251,7 +259,7 @@ var AssetManager = (function () {
         // See http://stackoverflow.com/questions/2879509/dynamically-loading-javascript-synchronously
         // See https://github.com/addyosmani/pubsubz
         //
-        loadScriptSync('pubsubz.js');
+        loadScriptSync('pubsubz.js', this);
 
         initEventSystem();
 
@@ -273,6 +281,13 @@ var AssetManager = (function () {
         // var privateRandomNumber = Math.random();
 
         return {
+            LoadScriptAsync: function (url, callback) {
+                return loadScriptAsync(url, callback);
+            },
+
+            LoadScriptSync: function (url, context) {
+                return loadScriptSync(url, context);
+            },
 
             // Public methods and variables
             // 

@@ -5,6 +5,7 @@
     <script src="AssetManager.js"></script>
     <script src="Asset.js"></script>
     <script src="Logger.js"></script>
+    <script src="DialogueAsset.js"></script>
 </head>
 <body>
 
@@ -74,10 +75,14 @@
         var asset3 = new Logger();
         var asset4 = new Logger();
 
+        var asset5 = new DialogueAsset();
+
         asset3.log("Asset1: " + asset1.Class + ", " + asset1.Id);
         asset3.log("Asset2: " + asset2.Class + ", " + asset2.Id);
         asset3.log("Asset3: " + asset3.Class + ", " + asset3.Id);
         asset3.log("Asset4: " + asset4.Class + ", " + asset4.Id);
+
+        asset3.log("Asset5: " + asset5.Class + ", " + asset5.Id);
 
         // Use the new Logger directly.
         //
@@ -114,6 +119,22 @@
         // Test if we can reregister without creating new stuff in the register (ie get the existing unique id returned).
         //
         console.log("Trying to re-register: " + AssetManager.getInstance().registerAssetInstance(asset4, asset4.Class));
+
+        asset5.LoadScript("me", "script.txt");
+
+        // Interacting using ask/tell
+        //
+        console.log(asset5.Interact("me", "player", "banana"));
+
+        // Interacting using branches
+        //
+        asset5.Log(asset5.Interact("me", "player"));
+        asset5.Log(asset5.Interact("me", "player", 2)); //Answer id 2
+
+        asset5.Log(asset5.Interact("me", "player"));
+        asset5.Log(asset5.Interact("me", "player", 10)); //Answer id 10
+
+        // asset5.Log(asset5.Interact("me", "player"));
     </script>
 
 </body>
