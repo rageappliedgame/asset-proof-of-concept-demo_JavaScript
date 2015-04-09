@@ -137,7 +137,7 @@ function DialogueAsset() {
 
     _init(result.Class);
 
-    assetManager.LoadScriptSync('dialogue.js', result);
+    assetManager.LoadScriptSync('lib/dialogue.js', result);
 
     return result;
 };

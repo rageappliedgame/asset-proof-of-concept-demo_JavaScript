@@ -259,7 +259,7 @@ var AssetManager = (function () {
         // See http://stackoverflow.com/questions/2879509/dynamically-loading-javascript-synchronously
         // See https://github.com/addyosmani/pubsubz
         //
-        loadScriptSync('pubsubz.js', this);
+        loadScriptSync('lib/pubsubz.js', this);
 
         initEventSystem();
 

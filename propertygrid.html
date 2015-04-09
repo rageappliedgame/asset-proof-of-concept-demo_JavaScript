@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>jqPropertyGrid Example</title>
+    <style>
+        body {
+            font-family: 'verdana';
+            font-size: 12px;
+        }
+    </style>
+    <link rel='stylesheet' href='lib/jqPropertyGrid.css' />
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <!--<link rel='stylesheet' href='http://bgrins.github.com/spectrum/spectrum.css' />-->
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <!--<script type="text/javascript" src="http://bgrins.github.com/spectrum/spectrum.js" ></script>-->
+    <script src="lib/jqPropertyGrid.js"></script>
+    <script>
+        // This is our target object
+        var theObj = {
+            font: 'Consolas',
+            fontSize: 14,
+            fontColor: '#a3ac03',
+            jQuery: true,
+            modernizr: false,
+            framework: 'angular',
+            iHaveNoMeta: 'Never mind...',
+            area: 'Never mind2',
+            version: 'v0.92'
+        };
+
+        // This is the metadata object that describes the target object properties (optional)
+        var theMeta = {
+            // Since string is the default no nees to specify type
+            font: { group: 'Editor', name: 'Font', description: 'The font editor to use' },
+            // The "options" would be passed to jQueryUI as its options
+            fontSize: { group: 'Editor', name: 'Font size', type: 'number', options: { min: 0, max: 20, step: 2 } },
+            // The "options" would be passed to Spectrum as its options
+            fontColor: { group: 'Editor', name: 'Font color', type: 'color', options: { preferredFormat: 'hex' } },
+            // since typeof jQuery is boolean no need to specify type, also since "jQuery" is also the display text no need to specify name
+            jQuery: { group: 'Plugins', description: 'Whether or not to include jQuery on the page' },
+            // We can specify type boolean if we want...
+            modernizr: { group: 'Plugins', type: 'boolean', description: 'Whether or not to include modernizr on the page' },
+            framework: { name: 'Framework', group: 'Plugins', type: 'options', options: ['None', { text: 'AngularJS', value: 'angular' }, { text: 'Backbone.js', value: 'backbone' }], description: 'Whether to include any additional framework' },
+            // The "options" are rows/cols and are added to the textarea generated.
+            area: { name: 'Area', group: 'Extended', type: 'textarea', options: { rows: 4, cols: 80 }, description: 'Textarea extension' },
+            // Mimic a read-only property.
+            version: { name: 'Version', type: 'label', description: 'Version number' }
+        };
+
+        // Create the grid
+        $(function () {
+            $('#propGrid').jqPropertyGrid(theObj, theMeta);
+        });
+
+        function logit() {
+            var data = JSON.stringify($('#propGrid').jqPropertyGrid('get'), null, '\t');
+            console.log(data);
+            //$('#txtValues').val(first + '\n\n' + second);
+        }
+    </script>
+</head>
+<body>
+    <div id='propGrid'></div>
+    <br/>
+    <button onclick="logit()">show results</button>
+</body>
+</html>
