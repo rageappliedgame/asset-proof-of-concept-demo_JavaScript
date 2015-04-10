@@ -60,7 +60,7 @@ function DialogueAsset() {
             var logger = assetManager.findAssetByClass("Logger");
             logger.log(r.text);
             for (var response in r.responses) {
-                logger.log(r.responses[response].id + " - " + r.responses[response].text);
+                logger.log("  >> " + r.responses[response].id + ". " + r.responses[response].text);
             }
         },
 

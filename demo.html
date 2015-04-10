@@ -129,12 +129,14 @@
         // Interacting using branches
         //
         asset5.Log(asset5.Interact("me", "player"));
+        asset3.log("  << 2");
         asset5.Log(asset5.Interact("me", "player", 2)); //Answer id 2
 
         asset5.Log(asset5.Interact("me", "player"));
-        asset5.Log(asset5.Interact("me", "player", 10)); //Answer id 10
+        asset3.log("  << 6");
+        asset5.Log(asset5.Interact("me", "player", 6)); //Answer id 10
 
-        // asset5.Log(asset5.Interact("me", "player"));
+         asset5.Log(asset5.Interact("me", "player"));
     </script>
 
 </body>
